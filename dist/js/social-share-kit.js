@@ -385,6 +385,10 @@ var SocialShareKit = (function () {
         return text || ''
     }
 
+    function truthyOrEmpty(value) {
+        return value || value === '';
+    }
+
     function getDataOpts(options, network, el) {
         var validOpts = ['url', 'title', 'text', 'image', 'position', 'target'],
             opts = {}, optValue, optKey, dataKey, a, parent = el.parentNode;
@@ -394,11 +398,11 @@ var SocialShareKit = (function () {
             dataKey = 'data-' + optKey;
             var fromEl = el.getAttribute(dataKey);
             optValue = typeof fromEl != 'undefined' && fromEl;
-            if (typeof optValue == 'undefined') {
+            if (!truthyOrEmpty(optValue)) {
                 var fromParent = parent.getAttribute(dataKey);
                 optValue = fromParent != 'undefined' && fromParent;
             }
-            if (typeof optValue == 'undefined') {
+            if (!truthyOrEmpty(optValue)) {
                 optValue = (options[network] && typeof options[network][optKey] != 'undefined' ? options[network][optKey] : options[optKey]);
             }   
             if (typeof optValue != 'undefined') {
